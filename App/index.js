@@ -1,53 +1,48 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+// Filename: index.js
+// Combined code from all files
 
-const App = () => {
-  const fullText = 'Hi, this is Apply.\nCreating mobile apps is now as simple as typing text.\nJust input your idea and press APPLY, and our platform does the rest...';
-  const [displayedText, setDisplayedText] = useState('');
-  const [index, setIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+import React from 'react';
+import { SafeAreaView, StyleSheet, Text, FlatList, View, TouchableOpacity } from 'react-native';
 
-  useEffect(() => {
-    if (isPaused) return;
+const alphabet = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
 
-    const interval = setInterval(() => {
-      setDisplayedText((prev) => prev + fullText[index]);
-      setIndex((prev) => {
-        if (prev === fullText.length - 1) {
-          setIsPaused(true);
-          setTimeout(() => {
-            setDisplayedText('');
-            setIndex(0);
-            setIsPaused(false);
-          }, 2000);
-          return 0;
-        }
-        return prev + 1;
-      });
-    }, 100);
+export default function App() {
+    const [index, setIndex] = React.useState(0);
 
-    return () => clearInterval(interval);
-  }, [index, isPaused]);
+    const handleNext = () => {
+        setIndex((prevIndex) => (prevIndex + 1) % alphabet.length);
+    };
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{displayedText}</Text>
-    </View>
-  );
-};
+    return (
+        <SafeAreaView style={styles.container}>
+            <Text style={styles.letter}>{alphabet[index]}</Text>
+            <TouchableOpacity style={styles.button} onPress={handleNext}>
+                <Text style={styles.buttonText}>Next</Text>
+            </TouchableOpacity>
+        </SafeAreaView>
+    );
+}
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'black',
-    padding: 20,
-  },
-  text: {
-    color: 'white',
-    fontSize: 24,
-    fontFamily: 'monospace',
-  },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+    },
+    letter: {
+        fontSize: 100,
+        fontWeight: 'bold',
+        marginVertical: 20,
+    },
+    button: {
+        marginTop: 20,
+        padding: 10,
+        backgroundColor: '#007AFF',
+        borderRadius: 5,
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 20,
+    },
 });
-
-export default App;
