@@ -2,9 +2,9 @@
 // Combined code from all files
 
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, FlatList, View, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-const alphabet = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
+const alphabet = ['A', 'B', 'C', 'D', 'E'];
 
 export default function App() {
     const [index, setIndex] = React.useState(0);
